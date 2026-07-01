@@ -2,6 +2,10 @@ from langchain_community.tools import DuckDuckGoSearchRun
 from langchain_community.utilities import WikipediaAPIWrapper
 from langchain.tools import tool
 from datetime import datetime
+import wikipedia
+
+# Fix for JSONDecodeError - Wikipedia sometimes rejects requests without a proper User-Agent
+wikipedia.wikipedia.USER_AGENT = "MySearchAgent/1.0 (myemail@example.com)"
 
 @tool
 def save_to_file_tool(content: str, filename: str = None) -> str:
@@ -23,4 +27,8 @@ api_wrapper = WikipediaAPIWrapper(top_k_results=3, doc_content_chars_max=4000)
 @tool
 def wikipedia_tool(query: str) -> str:
     """useful for when you need to answer questions about people, places, or things."""
-    return api_wrapper.run(query)
+    try:
+        return api_wrapper.run(query)
+    except Exception as e:
+        return f"Wikipedia lookup failed for '{query}': {e}"
+    

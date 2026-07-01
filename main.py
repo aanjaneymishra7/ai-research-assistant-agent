@@ -6,6 +6,7 @@ from langchain_core.output_parsers import PydanticOutputParser
 from langchain_classic.agents import create_tool_calling_agent, AgentExecutor
 # Added save_to_file_tool to the import list below
 from tools import search_tool, wikipedia_tool, save_to_file_tool 
+import os
 
 load_dotenv()
 
@@ -16,7 +17,7 @@ class SearchAgentInput(BaseModel):
     tools_used: list[str] = Field(description="List of tools used")
 
 # Note: "claude-v1" is deprecated; consider updating to "claude-3-5-sonnet-20240620"
-llm = ChatAnthropic(model="claude-opus", temperature=0.7)
+llm = ChatAnthropic(model="claude-opus-4-8", anthropic_api_key=os.getenv("ANTHROPIC_API_KEY"))  # Ensure your API key is set in the .env file
 Parser = PydanticOutputParser(pydantic_object=SearchAgentInput)
 
 prompt = ChatPromptTemplate.from_messages([

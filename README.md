@@ -19,6 +19,9 @@ An intelligent, tool-calling AI agent built using **LangChain** and **Anthropic'
 ## 📋 Project Structure
 
 ├── main.py            # Agent configuration, prompt engineering, and execution loop[cite: 2]
+
 ├── tools.py           # Implementation of custom search and file-saving tools[cite: 4]
+
 ├── requirements.txt   # Project dependencies[cite: 3]
+
 └── .env               # API keys and environment variables (Do not commit to git!)
